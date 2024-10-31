@@ -28,6 +28,13 @@ namespace Mom5_Projekt.Models
 
 
         //Metod för att hämta transaktioner
+        public List<Transaction> FetchTransactions(string category)
+        {
+           
+                   return _categories.ContainsKey(category) ? _categories[category] : new List<Transaction>();
+           
+        }
+        
     
     }
 }

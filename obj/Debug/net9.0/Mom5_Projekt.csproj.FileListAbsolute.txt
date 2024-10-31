@@ -1,0 +1,15 @@
+C:\Utbildning\DT071G C#.NET\Nytt försök\Mom5_Projekt\bin\Debug\net9.0\Mom5_Projekt.exe
+C:\Utbildning\DT071G C#.NET\Nytt försök\Mom5_Projekt\bin\Debug\net9.0\Mom5_Projekt.deps.json
+C:\Utbildning\DT071G C#.NET\Nytt försök\Mom5_Projekt\bin\Debug\net9.0\Mom5_Projekt.runtimeconfig.json
+C:\Utbildning\DT071G C#.NET\Nytt försök\Mom5_Projekt\bin\Debug\net9.0\Mom5_Projekt.dll
+C:\Utbildning\DT071G C#.NET\Nytt försök\Mom5_Projekt\bin\Debug\net9.0\Mom5_Projekt.pdb
+C:\Utbildning\DT071G C#.NET\Nytt försök\Mom5_Projekt\obj\Debug\net9.0\Mom5_Projekt.GeneratedMSBuildEditorConfig.editorconfig
+C:\Utbildning\DT071G C#.NET\Nytt försök\Mom5_Projekt\obj\Debug\net9.0\Mom5_Projekt.AssemblyInfoInputs.cache
+C:\Utbildning\DT071G C#.NET\Nytt försök\Mom5_Projekt\obj\Debug\net9.0\Mom5_Projekt.AssemblyInfo.cs
+C:\Utbildning\DT071G C#.NET\Nytt försök\Mom5_Projekt\obj\Debug\net9.0\Mom5_Projekt.csproj.CoreCompileInputs.cache
+C:\Utbildning\DT071G C#.NET\Nytt försök\Mom5_Projekt\obj\Debug\net9.0\Mom5_Projekt.sourcelink.json
+C:\Utbildning\DT071G C#.NET\Nytt försök\Mom5_Projekt\obj\Debug\net9.0\Mom5_Projekt.dll
+C:\Utbildning\DT071G C#.NET\Nytt försök\Mom5_Projekt\obj\Debug\net9.0\refint\Mom5_Projekt.dll
+C:\Utbildning\DT071G C#.NET\Nytt försök\Mom5_Projekt\obj\Debug\net9.0\Mom5_Projekt.pdb
+C:\Utbildning\DT071G C#.NET\Nytt försök\Mom5_Projekt\obj\Debug\net9.0\Mom5_Projekt.genruntimeconfig.cache
+C:\Utbildning\DT071G C#.NET\Nytt försök\Mom5_Projekt\obj\Debug\net9.0\ref\Mom5_Projekt.dll

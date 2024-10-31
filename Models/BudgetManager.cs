@@ -10,6 +10,8 @@ namespace Mom5_Projekt.Models
     {
         //Privat medlemsvariabel för TransactionCategory
          private TransactionCategory _transactionCategory;
+
+         private Transaction _transaction;
     
     //Konstruktor
     public BudgetManager()
@@ -29,6 +31,29 @@ namespace Mom5_Projekt.Models
         Console.WriteLine($"Transaktion för kategorin: {category} är registrerad");
     }
  
- 
+    //Metod för att hämta transaktioner
+    public void GetTransactions(string category)
+    {
+        var transactions = _transactionCategory.FetchTransactions(category);
+
+        if (transactions !=null && transactions.Count > 0)
+        {
+            Console.WriteLine($"Transaktioner för kateogin: {category} ");
+            Console.WriteLine("-----------------------------------------");
+
+            foreach (var _transaction in transactions)
+            {
+                _transaction.DisplayInfo();
+
+               // Console.WriteLine($"ID: {transaction.TransactionID}, Beskrivning: {transaction.Description}, Belopp: {transaction.Amount}, Datum: {transaction.Date}");
+            }
+        }
+           else
+    {
+        Console.WriteLine($"Inga transaktioner hittades för kategorin '{category}'.");
+    }
+    }
+
+
     }
 }

@@ -12,6 +12,7 @@ BudgetManager budgetManager = new BudgetManager();
  bool programRunning = true;
 
 while (programRunning)
+{
 Console.Clear();            //Skriver om skärm efter varje menyval
     Console.WriteLine("BudgetApp");
     Console.WriteLine("----------");
@@ -45,33 +46,45 @@ Console.Clear();            //Skriver om skärm efter varje menyval
                 string description = Console.ReadLine();
 
                 Console.WriteLine("Ange belopp för transaktion: ");
-                string amount = Console.ReadLine();
+                decimal amount = decimal.Parse(Console.ReadLine());
 
                 Console.Write("Ange datum (yyyy-mm-dd): ");
                 DateTime date = DateTime.Parse(Console.ReadLine());
 
+                //Instansierar Transaction
+                Transaction transaction = new Income(description, amount, date);
 
-                //Skapa ny transaktion
-                Transaction transaction = new Transaction
-                {
-                    Description = description,
-                    Amount = amount,
-                    Date = date
-                };
-
+                //Anropar RegisterTransaction genom budgetManager
                 budgetManager.RegisterTransaction(category, transaction);
 
+                    Console.WriteLine("Transaktionen har registrerats!");
                     Console.WriteLine("Tryck på valfri tangent...");
                     Console.ReadKey();
                     break; 
           
           
+
+                case 3:
+                Console.Clear();
+
+                 Console.WriteLine("Ange kategori för att visa transaktioner: ");
+                 category = Console.ReadLine(); 
+
+                budgetManager.GetTransactions(category);
+                  
+                    Console.WriteLine("Tryck på valfri tangent...");
+                    Console.ReadKey();
+                    break; 
+
+
+
           
               case 7:
                programRunning = false;
                     Console.WriteLine("Programmet avslutas.");
                     Console.WriteLine("Tryck på valfri tangent...");
                     Console.ReadKey();
+                    Console.Clear();
                     break;
           
           
@@ -81,10 +94,11 @@ Console.Clear();            //Skriver om skärm efter varje menyval
     {
         Console.WriteLine($"Något gick fel: {ex.Message}");
     }
-
-
-
-
+    }
+     else
+    {
+        Console.WriteLine("Ogiltigt val, försök igen.");
+    }
 
 
     }
