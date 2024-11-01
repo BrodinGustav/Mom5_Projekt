@@ -13,7 +13,8 @@ BudgetManager budgetManager = new BudgetManager();
 
 while (programRunning)
 {
-Console.Clear();            //Skriver om skärm efter varje menyval
+    Console.Clear();
+            //Skriver om skärm efter varje menyval
     Console.WriteLine("BudgetApp");
     Console.WriteLine("----------");
     Console.WriteLine("1. Lägg till inkomst");

@@ -11,14 +11,28 @@ namespace Mom5_Projekt.Models
         //Privat medlemsvariabel för TransactionCategory
          private TransactionCategory _transactionCategory;
 
+         //Privat medlemsvariabel för Transaction
          private Transaction _transaction;
+
+        //Privat medlemsvariabel för SaveData
+         private SaveData _saveData;
+
+
+
+//Sökväg till JSON-fil där data ska sparas
+string filePath= @"C:\Utbildning\DT071G C#.NET\Mom5_Rapport\Nytt försök\budgetData.json";
+
+
+         
     
     //Konstruktor
     public BudgetManager()
     {
-                //Instansierar TransactionCategory
-                _transactionCategory = new TransactionCategory();
-    }
+              _transactionCategory = new TransactionCategory(filePath);
+            _saveData = new SaveData();
+       
+
+    }   
 
     //Metoder
 
@@ -27,13 +41,16 @@ namespace Mom5_Projekt.Models
     {
         //Anropar AddTransaction från TransactionCategory
         _transactionCategory.AddTransaction(category, transaction);
-
         Console.WriteLine($"Transaktion för kategorin: {category} är registrerad");
+
     }
+    
  
     //Metod för att hämta transaktioner
     public void GetTransactions(string category)
     {
+        _saveData.LoadDataFromFile(filePath, _transactionCategory);
+
         var transactions = _transactionCategory.FetchTransactions(category);
 
         if (transactions !=null && transactions.Count > 0)
