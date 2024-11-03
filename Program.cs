@@ -5,8 +5,11 @@ using System.Net;
 using System.Runtime.InteropServices;
 using Mom5_Projekt.Models;
 
-//Instansierar BudgetManager
-BudgetManager budgetManager = new BudgetManager();
+//Instansierar SaveData
+SaveData saveData = new SaveData();
+
+//Instansierar BudgetManager med saveData som argument för tillgång till metoder
+BudgetManager budgetManager = new BudgetManager(saveData);
 
 //Boolean som kontrollerar om programmet ska avslutas
  bool programRunning = true;
@@ -52,9 +55,8 @@ while (programRunning)
                 Console.Write("Ange datum (yyyy-mm-dd): ");
                 DateTime date = DateTime.Parse(Console.ReadLine());
 
-                
-
-
+                //Anropar add.Transaction från BudgetManager
+                budgetManager.addTransaction(category, description, amount, date);
 
                  Console.WriteLine("Tryck på valfri tangent...");
                     Console.ReadKey();

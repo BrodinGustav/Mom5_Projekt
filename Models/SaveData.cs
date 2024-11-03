@@ -10,15 +10,18 @@ namespace Mom5_Projekt.Models
    
        public class SaveData
     {
-         //Instansierar BudgetManager 
-        BudgetManager budgetManager= new BudgetManager();
+
+            //Deklarerar lista utifrån basklassen TransactionBluePrint som lagrar transaktioner
+            public List<TransactionBluePrint> _transactionBluePrintList { get; set; }
+
+
 
 
         //Metod för att spara transaktion
-        public void SaveTransaction()
+        public void SaveTransaction(List<TransactionBluePrint> transactions)
         {
             //Serialiserar listan till JSON-sträng.
-            string json = JsonSerializer.Serialize(budgetManager._transactionBluePrintList);
+            string json = JsonSerializer.Serialize(transactions);
 
             //Skriver över Json-sträng till fil
             File.WriteAllText("budgetData.json", json);
@@ -28,13 +31,10 @@ namespace Mom5_Projekt.Models
 
 
         //Metod för att ladda sparad transaktion
-        public int LoadTransaction()
+        public List <TransactionBluePrint> LoadTransaction()
         {
             //Lagrar json-fil i variabel
             string fileName = "budgetData.json";
-
-            //Variabel för räknar transaktioner
-            int transactionCount = 0;
 
             //Kontroll om filen finns
             if(File.Exists(fileName))
@@ -43,17 +43,15 @@ namespace Mom5_Projekt.Models
                 string jsonText = File.ReadAllText(fileName);
 
                 //Deserialiserar JSON-sträng till lista av objekt
-                budgetManager._transactionBluePrintList = JsonSerializer.Deserialize<List<TransactionBluePrint>>(jsonText);
+                return JsonSerializer.Deserialize<List<TransactionBluePrint>>(jsonText) ?? new List<TransactionBluePrint>();;
 
-                //Hämta antalet transaktioner
-                transactionCount = budgetManager._transactionBluePrintList.Count;
+              
             }
             else
             {
                 Console.WriteLine("Inga transaktioner hittades.");
+                 return new List<TransactionBluePrint>();
             }
-                //returnerar antal transaktioner
-                return transactionCount;
         }
     }
 
