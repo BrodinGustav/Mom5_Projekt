@@ -15,7 +15,14 @@ namespace Mom5_Projekt.Models
 
 
         //Metod för att spara transaktion
-        
+        public void SaveTransaction()
+        {
+            //Serialiserar listan till JSON-sträng.
+            string json = JsonSerializer.Serialize(budgetManager._transactionBluePrintList);
+
+            //Skriver över Json-sträng till fil
+            File.WriteAllText("budgetData.json", json);
+        }        
 
 
 

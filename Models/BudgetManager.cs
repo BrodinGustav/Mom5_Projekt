@@ -35,6 +35,10 @@ namespace Mom5_Projekt.Models
             public void addTransaction()
             {
 
+
+
+                //Anropar metod från SaveData för att spara transaktion
+                _saveData.SaveTransaction();
             }
 
             //Metod för att skriva ut transaktioner
