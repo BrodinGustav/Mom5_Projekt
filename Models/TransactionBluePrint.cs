@@ -24,9 +24,9 @@ namespace Mom5_Projekt.Models
         }  
 
         //Metoder
-        public virtual void DisplayInfo()
+        public virtual string DisplayInfo()
         {
-            Console.WriteLine($"ID: {TransactionID}, Kategori: {Category}, Beskrivning: {Description}, Belopp: {Amount}, Datum: {Date.ToShortDateString()}");
+            return $"ID: {TransactionID}, Kategori: {Category}, Beskrivning: {Description}, Belopp: {Amount}, Datum: {Date.ToShortDateString()}";
         }
     
         //Boolean som kollar ifall transaktion är inkomst eller utkomst

@@ -102,23 +102,21 @@ namespace Mom5_Projekt.Models
 
 
             //Metod för att skriva ut transaktioner
-            public void displayTransactions(string category)
+            public void displayTransactions()
             {
                 var transactionList = _saveData.LoadTransaction();
 
-                //Filtrerar transaktioner baserat på kategori
-             var filteredTransactions = transactionList
-             .Where(t => t.Category.Equals(category, StringComparison.OrdinalIgnoreCase))
-             .ToList();
-
-
-
-                if (filteredTransactions.Count > 0)
+               if (transactionList.Count > 0)
                 {
-                    foreach (var transaction in filteredTransactions)
+                    
+                    for(int i = 0; i < transactionList.Count; i++)
                     {
-                        transaction.DisplayInfo();
+                        var transaction = transactionList[i];
+                        Console.WriteLine($"ID: [{i+1}] - {transaction.DisplayInfo()}");
                     }
+                    
+                    
+                 
                 }
             }
 

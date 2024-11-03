@@ -67,10 +67,7 @@ while (programRunning)
                 case 3:
                 Console.Clear();
 
-                 Console.WriteLine("Ange kategori för att visa transaktioner: ");
-                 string categoryInput = Console.ReadLine(); 
-
-                    budgetManager.displayTransactions(categoryInput);
+                    budgetManager.displayTransactions();
                   
                     Console.WriteLine("Tryck på valfri tangent...");
                     Console.ReadKey();

@@ -16,9 +16,9 @@ namespace Mom5_Projekt.Models
         }
 
         //Metoder att ärva från TransactionBluePrint
-      public override void DisplayInfo()
+      public override string DisplayInfo()
         {
-            Console.WriteLine($"ID: {TransactionID}, [Inkomst], Kategori: {Category}, Beskrivning: {Description}, Belopp: {Amount}, Datum: {Date.ToShortDateString()}");
+            return $"ID: {TransactionID}, [Inkomst], Kategori: {Category}, Beskrivning: {Description}, Belopp: {Amount}, Datum: {Date.ToShortDateString()}";
         }
     
     

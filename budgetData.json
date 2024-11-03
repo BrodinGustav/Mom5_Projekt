@@ -1,9 +1,16 @@
 [
   {
     "TransactionID": 0,
-    "Category": "inkomst",
-    "Description": "inkomst",
-    "Amount": 3000,
+    "Category": "LL\u0000n",
+    "Description": "l\u0000n",
+    "Amount": 20,
     "Date": "2024-01-02T00:00:00"
+  },
+  {
+    "TransactionID": 0,
+    "Category": "jek",
+    "Description": "jek",
+    "Amount": 20,
+    "Date": "2024-02-01T00:00:00"
   }
 ]
