@@ -7,63 +7,47 @@ using System.Runtime.CompilerServices;
 
 namespace Mom5_Projekt.Models
 {
-    
+   
        public class SaveData
     {
-        public void saveBudget(TransactionCategory transactionCategory, string filePath)
-        {
-              try
-        {
+         //Instansierar BudgetManager 
+        BudgetManager budgetManager= new BudgetManager();
 
-            //Serialiserar listan av transaktioner
-            string json = JsonSerializer.Serialize(transactionCategory.GetCategoriesCopy(), new JsonSerializerOptions {WriteIndented = true});
 
-            //Debugg
-            Console.WriteLine("JSON-data som ska sparas: " + json);
-
-            //Skriv JSON till fil
-            File.WriteAllText(filePath, json);
-            Console.WriteLine("Data har sparats!");
-             }
-        catch (IOException ex)
-        {
-            Console.WriteLine($"Ett I/O-fel uppstod: {ex.Message}");
-        }
-        catch (UnauthorizedAccessException ex)
-        {
-            Console.WriteLine($"Åtkomst nekad: {ex.Message}");
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Något gick fel: {ex.Message}");
-        }
-    }
-    
-
-        public void LoadDataFromFile(string filePath, TransactionCategory transactionCategory)
-        {
-            if(File.Exists(filePath))
-            {
-                var jsonData = File.ReadAllText(filePath);
-
-                var loadedData = JsonSerializer.Deserialize<Dictionary<string, List<Transaction>>>(jsonData);
-
-                 //Om data är laddad korrekt, uppdatera _categories i TransactionCategory
-            if (loadedData != null)
-            {
-                transactionCategory.GetCategoriesCopy();
-                Console.WriteLine("Data har laddats och uppdaterat kategorierna.");
-            }
-        }
-         else
-        {
-            Console.WriteLine("Filen finns inte.");
-        }
-
-            }
+        //Metod för att spara transaktion
         
+
+
+
+
+        //Metod för att ladda sparad transaktion
+        public int LoadTransaction()
+        {
+            //Lagrar json-fil i variabel
+            string fileName = "budgetData.json";
+
+            //Variabel för räknar transaktioner
+            int transactionCount = 0;
+
+            //Kontroll om filen finns
+            if(File.Exists(fileName))
+            {
+                //Läser in filen som sträng
+                string jsonText = File.ReadAllText(fileName);
+
+                //Deserialiserar JSON-sträng till lista av objekt
+                budgetManager._transactionBluePrintList = JsonSerializer.Deserialize<List<TransactionBluePrint>>(jsonText);
+
+                //Hämta antalet transaktioner
+                transactionCount = budgetManager._transactionBluePrintList.Count;
+            }
+            else
+            {
+                Console.WriteLine("Inga transaktioner hittades.");
+            }
+                //returnerar antal transaktioner
+                return transactionCount;
         }
-            
     }
 
-
+}

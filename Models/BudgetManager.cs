@@ -8,69 +8,39 @@ namespace Mom5_Projekt.Models
 {
     public class BudgetManager
     {
-        //Privat medlemsvariabel för TransactionCategory
-         private TransactionCategory _transactionCategory;
-
-         //Privat medlemsvariabel för Transaction
-         private Transaction _transaction;
-
-        //Privat medlemsvariabel för SaveData
-         private SaveData _saveData;
-
-
-
-//Sökväg till JSON-fil där data ska sparas
-string filePath= @"C:\Utbildning\DT071G C#.NET\Mom5_Rapport\Nytt försök\budgetData.json";
-
-
-         
-    
-    //Konstruktor
-    public BudgetManager()
-    {
-              _transactionCategory = new TransactionCategory(filePath);
-            _saveData = new SaveData();
+        //Instansierar SaveData
+        SaveData _saveData = new SaveData();
        
 
-    }   
 
-    //Metoder
+        //Deklarerar lista utifrån basklassen TransactionBluePrint som lagrar transaktioner
+            public List<TransactionBluePrint> _transactionBluePrintList { get; set; }
 
-    //Metod för registrering av transaktion
-    public void RegisterTransaction(string category, Transaction transaction)
+
+    public BudgetManager()
     {
-        //Anropar AddTransaction från TransactionCategory
-        _transactionCategory.AddTransaction(category, transaction);
-        Console.WriteLine($"Transaktion för kategorin: {category} är registrerad");
-
+        //Listobjekt utifrån klassen med struktur från basklassen
+        _transactionBluePrintList = new List<TransactionBluePrint>();
+     
     }
-    
- 
-    //Metod för att hämta transaktioner
-    public void GetTransactions(string category)
-    {
-        _saveData.LoadDataFromFile(filePath, _transactionCategory);
 
-        var transactions = _transactionCategory.FetchTransactions(category);
-
-        if (transactions !=null && transactions.Count > 0)
+       //Anropar metod från klassen SaveData för att läsa in sparade transaktioner
+        public void LoadTransaction()
         {
-            Console.WriteLine($"Transaktioner för kateogin: {category} ");
-            Console.WriteLine("-----------------------------------------");
-
-            foreach (var _transaction in transactions)
-            {
-                _transaction.DisplayInfo();
-
-               // Console.WriteLine($"ID: {transaction.TransactionID}, Beskrivning: {transaction.Description}, Belopp: {transaction.Amount}, Datum: {transaction.Date}");
-            }
+            _saveData.LoadTransaction();
         }
-           else
-    {
-        Console.WriteLine($"Inga transaktioner hittades för kategorin '{category}'.");
-    }
+    
+
+            //Metod för att registrera transaktion
+            public void addTransaction()
+            {
+
+            }
+
+            //Metod för att skriva ut transaktioner
+
+            //Metod för att radera transaktion
+
     }
 
-
-    }
 }

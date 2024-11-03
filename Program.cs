@@ -52,14 +52,11 @@ while (programRunning)
                 Console.Write("Ange datum (yyyy-mm-dd): ");
                 DateTime date = DateTime.Parse(Console.ReadLine());
 
-                //Instansierar Transaction
-                Transaction transaction = new Income(description, amount, date);
+                
 
-                //Anropar RegisterTransaction genom budgetManager
-                budgetManager.RegisterTransaction(category, transaction);
 
-                    Console.WriteLine("Transaktionen har registrerats!");
-                    Console.WriteLine("Tryck på valfri tangent...");
+
+                 Console.WriteLine("Tryck på valfri tangent...");
                     Console.ReadKey();
                     break; 
           
@@ -71,7 +68,6 @@ while (programRunning)
                  Console.WriteLine("Ange kategori för att visa transaktioner: ");
                  category = Console.ReadLine(); 
 
-                budgetManager.GetTransactions(category);
                   
                     Console.WriteLine("Tryck på valfri tangent...");
                     Console.ReadKey();
