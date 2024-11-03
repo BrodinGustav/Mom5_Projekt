@@ -1,0 +1,9 @@
+[
+  {
+    "TransactionID": 0,
+    "Category": "inkomst",
+    "Description": "inkomst",
+    "Amount": 3000,
+    "Date": "2024-01-02T00:00:00"
+  }
+]

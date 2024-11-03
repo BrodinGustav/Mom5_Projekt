@@ -14,44 +14,92 @@ namespace Mom5_Projekt.Models
             //Deklarerar lista utifrån basklassen TransactionBluePrint som lagrar transaktioner
             public List<TransactionBluePrint> _transactionBluePrintList { get; set; }
 
+            //Filväg där transaktioner sparas
+              private readonly string filePath = "C:/Utbildning/DT071G C#.NET/Nytt försök/Mom5_Projekt/budgetData.json";
 
 
 
         //Metod för att spara transaktion
         public void SaveTransaction(List<TransactionBluePrint> transactions)
         {
+              try
+            {
+
+                //Kontroll om listan är null
+                if (transactions == null)
+                {
+                    Console.WriteLine("Transaktionslistan är null, inget att spara.");
+                    return;
+                }
+         
             //Serialiserar listan till JSON-sträng.
-            string json = JsonSerializer.Serialize(transactions);
+            string json = JsonSerializer.Serialize(transactions, new JsonSerializerOptions {WriteIndented = true });
 
             //Skriver över Json-sträng till fil
-            File.WriteAllText("budgetData.json", json);
-        }        
+            File.WriteAllText(filePath, json);
 
+            Console.WriteLine("Transaktionen är sparad!");
+        }        
+        
+        catch (IOException ex) //Hantera eventuella IO-fel, t.ex. om filen inte kan skrivas
+            {
+                Console.WriteLine("Ett fel inträffade vid skrivning till filen: " + ex.Message);
+            }
+            catch (JsonException ex) //Hantera eventuella fel under serialisering
+            {
+                Console.WriteLine("Ett fel inträffade vid serialisering av budgetdata: " + ex.Message);
+            }
+            catch (Exception ex) //Hantera eventuella oväntade fel
+            {
+                Console.WriteLine("Ett oväntat fel inträffade: " + ex.Message);
+            }
+        }
 
 
 
         //Metod för att ladda sparad transaktion
-        public List <TransactionBluePrint> LoadTransaction()
+        public List <Transaction> LoadTransaction()
         {
-            //Lagrar json-fil i variabel
-            string fileName = "budgetData.json";
+             try
+            {
 
             //Kontroll om filen finns
-            if(File.Exists(fileName))
+            if(File.Exists(filePath))
             {
                 //Läser in filen som sträng
-                string jsonText = File.ReadAllText(fileName);
+                string jsonText = File.ReadAllText(filePath);
 
                 //Deserialiserar JSON-sträng till lista av objekt
-                return JsonSerializer.Deserialize<List<TransactionBluePrint>>(jsonText) ?? new List<TransactionBluePrint>();;
+               var transactions = JsonSerializer.Deserialize<List<Transaction>>(jsonText);
 
-              
+                //Kontroll om deserialisering lyckades
+                return transactions ?? new List<Transaction>();
             }
-            else
+
+                else
+                {
+                      Console.WriteLine("Ingen fil hittades för att ladda transaktioner.");
+                    return new List<Transaction>();
+                }              
+        }
+        
+          catch (IOException ex) //Hantera eventuella IO-fel, t.ex. om filen inte kan skrivas
             {
-                Console.WriteLine("Inga transaktioner hittades.");
-                 return new List<TransactionBluePrint>();
+                Console.WriteLine("Ett fel inträffade vid deserialisering av transaktioner: " + ex.Message);
             }
+            catch (JsonException ex) //Hantera eventuella fel under serialisering
+            {
+                Console.WriteLine("Ett fel inträffade vid serialisering av budgetdata: " + ex.Message);
+            }
+            catch (Exception ex) //Hantera eventuella oväntade fel
+            {
+                Console.WriteLine("Ett oväntat fel inträffade: " + ex.Message);
+            }
+            
+            Console.WriteLine("Inga transaktioner hittades.");
+
+              //Returnerar tom lista
+              return new List<Transaction>();
         }
     }
 

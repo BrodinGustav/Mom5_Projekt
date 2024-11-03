@@ -16,7 +16,7 @@ BudgetManager budgetManager = new BudgetManager(saveData);
 
 while (programRunning)
 {
-    Console.Clear();
+    //Console.Clear();
             //Skriver om skärm efter varje menyval
     Console.WriteLine("BudgetApp");
     Console.WriteLine("----------");
@@ -68,8 +68,9 @@ while (programRunning)
                 Console.Clear();
 
                  Console.WriteLine("Ange kategori för att visa transaktioner: ");
-                 category = Console.ReadLine(); 
+                 string categoryInput = Console.ReadLine(); 
 
+                    budgetManager.displayTransactions(categoryInput);
                   
                     Console.WriteLine("Tryck på valfri tangent...");
                     Console.ReadKey();

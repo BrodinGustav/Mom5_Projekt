@@ -8,6 +8,8 @@ namespace Mom5_Projekt.Models
         //Klassen ärver från basklassen Transaction
     public class Transaction : TransactionBluePrint
     {
+
+        //Konstruktor
         public Transaction(string category, string description, decimal amount, DateTime date) :base(category, description, amount, date)
         {
             
