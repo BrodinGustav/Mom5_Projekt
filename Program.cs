@@ -126,7 +126,7 @@ while (programRunning)
                Console.Clear();
 
                 //Anropar CalculateBalance med transaktionslistan
-                decimal balance = budgetManager.CalculateBalance(transactions);
+                decimal balance = budgetManager.CalculateBalance();
   
                     //Skriver ut totalt saldo
                     Console.WriteLine($"Det totala saldot är: {balance}");
