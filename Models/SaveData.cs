@@ -7,15 +7,15 @@ using System.Runtime.CompilerServices;
 
 namespace Mom5_Projekt.Models
 {
-   
-       public class SaveData
+
+    public class SaveData
     {
 
-            //Deklarerar lista utifrån basklassen TransactionBluePrint som lagrar transaktioner
-            public List<Transaction> _transactionList { get; set; }
+        //Deklarerar lista utifrån basklassen TransactionBluePrint som lagrar transaktioner
+        public List<Transaction> _transactionList { get; set; }
 
-            //Filväg där transaktioner sparas
-              private readonly string filePath = "C:/Utbildning/DT071G C#.NET/Nytt försök/Mom5_Projekt/budgetData.json";
+        //Filväg där transaktioner sparas
+        private readonly string filePath = "budgetData.json";
 
         //Konstruktor
         public SaveData()
@@ -27,7 +27,7 @@ namespace Mom5_Projekt.Models
         //Metod för att spara transaktion
         public void SaveTransaction(List<Transaction> _transactionsList)
         {
-              try
+            try
             {
 
                 //Kontroll om listan är null
@@ -36,17 +36,17 @@ namespace Mom5_Projekt.Models
                     Console.WriteLine("Transaktionslistan är tom, inget att spara.");
                     return;
                 }
-         
-            //Serialiserar listan till JSON-sträng.
-            string json = JsonSerializer.Serialize(_transactionsList, new JsonSerializerOptions {WriteIndented = true });
 
-            //Skriver över Json-sträng till fil
-            File.WriteAllText(filePath, json);
+                //Serialiserar listan till JSON-sträng.
+                string json = JsonSerializer.Serialize(_transactionsList, new JsonSerializerOptions { WriteIndented = true });
 
-            Console.WriteLine("Transaktionen är uppdaterad!");
-        }        
-        
-        catch (IOException ex) //Hantera eventuella IO-fel, t.ex. om filen inte kan skrivas
+                //Skriver över Json-sträng till fil
+                File.WriteAllText(filePath, json);
+
+                Console.WriteLine("Transaktionen är uppdaterad!");
+            }
+
+            catch (IOException ex) //Hantera eventuella IO-fel, t.ex. om filen inte kan skrivas
             {
                 Console.WriteLine("Ett fel inträffade vid skrivning till filen: " + ex.Message);
             }
@@ -63,32 +63,33 @@ namespace Mom5_Projekt.Models
 
 
         //Metod för att ladda sparad transaktion
-        public List <Transaction> LoadTransaction(string filePath)
+        public List<Transaction> LoadTransaction(string filePath)
         {
-             try
+            try
             {
 
-            //Kontroll om filen finns
-            if(File.Exists(filePath))
-            {
-                //Läser in filen som sträng
-                string jsonText = File.ReadAllText(filePath);
+                //Kontroll om filen finns
+                if (File.Exists(filePath))
+                {
+                    //Läser in filen som sträng
+                    string jsonText = File.ReadAllText(filePath);
 
-                //Deserialiserar JSON-sträng till lista av objekt
-               var transactions = JsonSerializer.Deserialize<List<Transaction>>(jsonText);
+                    //Deserialiserar JSON-sträng till lista av objekt
+                    var transactions = JsonSerializer.Deserialize<List<Transaction>>(jsonText);
 
-                //Kontroll om deserialisering lyckades
-                return transactions ?? new List<Transaction>();
-            }
+                    //Kontroll om deserialisering lyckades
+                    return transactions ?? new List<Transaction>();
+                }
 
                 else
                 {
-                      Console.WriteLine("Ingen fil hittades för att ladda transaktioner.");
+                    Console.WriteLine("Ingen fil hittades för att ladda transaktioner.");
+
                     return new List<Transaction>();
-                }              
-        }
-        
-          catch (IOException ex) //Hantera eventuella IO-fel, t.ex. om filen inte kan skrivas
+                }
+            }
+
+            catch (IOException ex) //Hantera eventuella IO-fel, t.ex. om filen inte kan skrivas
             {
                 Console.WriteLine("Ett fel inträffade vid deserialisering av transaktioner: " + ex.Message);
             }
@@ -101,12 +102,12 @@ namespace Mom5_Projekt.Models
                 Console.WriteLine("Ett oväntat fel inträffade: " + ex.Message);
             }
 
-               Console.WriteLine("Inga transaktioner hittades.");
+            Console.WriteLine("Inga transaktioner hittades.");
 
-              //Returnerar tom lista
-              return new List<Transaction>();
+            //Returnerar tom lista
+            return new List<Transaction>();
         }
-    
+
     }
 
 }
