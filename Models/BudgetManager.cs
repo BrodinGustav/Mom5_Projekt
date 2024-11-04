@@ -14,7 +14,7 @@ namespace Mom5_Projekt.Models
 
 
         //Initierar Lista
-       private List<TransactionBluePrint> _transactionBluePrintList = new List<TransactionBluePrint>();
+       private List<Transaction> _transactionList = new List<Transaction>();
 
 
 
@@ -22,20 +22,21 @@ namespace Mom5_Projekt.Models
     //Tar emot SaveData som argument i konstruktorn
     public BudgetManager(SaveData saveData)
     {
+        //Initierar
         _saveData = saveData;
-         _transactionBluePrintList = new List<TransactionBluePrint>();
+         _transactionList = new List<Transaction>();
     }
     
 
 
 
        //Anropar metod från klassen SaveData för att läsa in sparade transaktioner
-     /*   public void LoadTransaction()
+        public void LoadTransaction()
         {
-            _transactionBluePrintList =_saveData.LoadTransaction();
+            _transactionList =_saveData.LoadTransaction();
 
 
-            if (_transactionBluePrintList != null && _transactionBluePrintList.Count > 0)
+            if (_transactionList != null && _transactionList.Count > 0)
             {
                 Console.WriteLine("Transaktioner har laddats");
             }
@@ -46,7 +47,7 @@ namespace Mom5_Projekt.Models
                 Console.WriteLine("Inga transaktioner hittades");
             }
 
-        }*/
+        }
     
 
     
@@ -67,25 +68,32 @@ namespace Mom5_Projekt.Models
             
             }
 
+            if (amount <= 0)
+        {
+            Console.WriteLine("Var god ange ett giltigt belopp (större än 0).");
+            return;
+        }
+
+
             else
             {
                 //Skapar ny transaktion
-                Transaction newTransacion = new Transaction(category, description, amount, date);
+                Transaction newTransaction = new Transaction(category, description, amount, date);
+
+      // Lägger till transaktionen till listan i SaveData
+        _saveData._transactionList.Add(newTransaction); // Använd Transaction direkt här
 
 
-                //Lägger till transaktion till listan
-              _transactionBluePrintList.Add(newTransacion);
-
-
-                //Anropar metod från SaveData för att spara transaktion. Skickar med listan
-                if (_transactionBluePrintList != null && _transactionBluePrintList.Count > 0)
-            {
-                _saveData.SaveTransaction(_transactionBluePrintList);
-    
+                // Anropar metod från SaveData för att spara transaktion. Skickar med listan
+        if (_saveData._transactionList.Count > 0)
+        {
+            _saveData.SaveTransaction(_saveData._transactionList);
+             
+              
                 //Anropar metod för utskrift
-                newTransacion.DisplayInfo();
+                newTransaction.DisplayInfo();
             }
-
+        
             else
             {
                 Console.WriteLine("Det finns inga transaktioner att spara.");
@@ -97,7 +105,7 @@ namespace Mom5_Projekt.Models
                 Console.WriteLine("Ett fel inträffade: " + ex.Message);
             }
         }
-
+           
 
 
 
@@ -121,7 +129,32 @@ namespace Mom5_Projekt.Models
             }
 
             //Metod för att radera transaktion
+            public void deleteTransaction (int index)
+            {
+                  var transactionList = _saveData.LoadTransaction();
+                
+                if (transactionList == null  || transactionList.Count == 0)
+                {
+                    Console.WriteLine("Finns inga transaktioner att radera");
+                    return;
+                }
+                
+                
+                //Kontroll om index är inom ramen för listan
+                if (index >= 0 && index < transactionList.Count)
+                {
+                    //Radera transaktion
+                    transactionList.RemoveAt(index);
 
+                    //Sparar uppdaterad lista
+                    _saveData.SaveTransaction(_transactionList);
+                    Console.WriteLine("Transaktion har raderats.");
+                }
+                else
+                {
+                    Console.WriteLine("Det finns inga transaktioner att radera.");
+                }
+            }
     }
 
     }

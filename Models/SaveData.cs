@@ -12,28 +12,33 @@ namespace Mom5_Projekt.Models
     {
 
             //Deklarerar lista utifrån basklassen TransactionBluePrint som lagrar transaktioner
-            public List<TransactionBluePrint> _transactionBluePrintList { get; set; }
+            public List<Transaction> _transactionList { get; set; }
 
             //Filväg där transaktioner sparas
               private readonly string filePath = "C:/Utbildning/DT071G C#.NET/Nytt försök/Mom5_Projekt/budgetData.json";
 
-
+        //Konstruktor
+        public SaveData()
+        {
+            //Säkerställer att listan är initialiserad
+            _transactionList = new List<Transaction>();
+        }
 
         //Metod för att spara transaktion
-        public void SaveTransaction(List<TransactionBluePrint> transactions)
+        public void SaveTransaction(List<Transaction> _transactionsList)
         {
               try
             {
 
                 //Kontroll om listan är null
-                if (transactions == null)
+                if (_transactionsList == null)
                 {
                     Console.WriteLine("Transaktionslistan är null, inget att spara.");
                     return;
                 }
          
             //Serialiserar listan till JSON-sträng.
-            string json = JsonSerializer.Serialize(transactions, new JsonSerializerOptions {WriteIndented = true });
+            string json = JsonSerializer.Serialize(_transactionsList, new JsonSerializerOptions {WriteIndented = true });
 
             //Skriver över Json-sträng till fil
             File.WriteAllText(filePath, json);

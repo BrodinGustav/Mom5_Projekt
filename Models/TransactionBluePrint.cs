@@ -8,7 +8,6 @@ namespace Mom5_Projekt.Models
     public abstract class TransactionBluePrint
     {
         //private set används för att kaplsa in datan i klassen. 
-        public int TransactionID { get; private set; }
         public string Category { get; private set; }
         public string Description   { get; private set; }
         public decimal Amount { get; private set; } 
@@ -26,7 +25,7 @@ namespace Mom5_Projekt.Models
         //Metoder
         public virtual string DisplayInfo()
         {
-            return $"ID: {TransactionID}, Kategori: {Category}, Beskrivning: {Description}, Belopp: {Amount}, Datum: {Date.ToShortDateString()}";
+            return $"Kategori: {Category}, Beskrivning: {Description}, Belopp: {Amount}, Datum: {Date.ToShortDateString()}";
         }
     
         //Boolean som kollar ifall transaktion är inkomst eller utkomst
