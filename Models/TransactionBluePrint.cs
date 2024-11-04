@@ -22,13 +22,17 @@ namespace Mom5_Projekt.Models
             Date = date;
         }  
 
+  //Metod för att uppdatera Amount
+    protected void SetAmount(decimal amount)
+    {
+        Amount = amount;
+    }
+
         //Metoder
         public virtual string DisplayInfo()
         {
             return $"Kategori: {Category}, Beskrivning: {Description}, Belopp: {Amount}, Datum: {Date.ToShortDateString()}";
         }
     
-        //Boolean som kollar ifall transaktion är inkomst eller utkomst
-       // public abstract bool isIncome();
 }
 }

@@ -1,8 +1,16 @@
 [
   {
-    "Category": "dsa",
-    "Description": "dsa",
-    "Amount": 2,
-    "Date": "2024-02-01T00:00:00"
+    "Type": 0,
+    "Category": "l\u0000n",
+    "Description": "l\u0000n",
+    "Amount": 1000,
+    "Date": "2024-01-02T00:00:00"
+  },
+  {
+    "Type": 1,
+    "Category": "hyra",
+    "Description": "hyra",
+    "Amount": 800,
+    "Date": "2024-02-01T02:00:00+01:00"
   }
 ]

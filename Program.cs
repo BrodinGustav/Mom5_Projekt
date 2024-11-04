@@ -9,11 +9,15 @@ using Mom5_Projekt.Models;
 //Instansierar SaveData
 SaveData _saveData = new SaveData();
 
+
+  //Definiera filvägen för JSON-filen
+    string filePath = "C:/Utbildning/DT071G C#.NET/Nytt försök/Mom5_Projekt";
+
 //Instansierar BudgetManager med saveData som argument för tillgång till metoder
-BudgetManager budgetManager = new BudgetManager(_saveData);
+BudgetManager budgetManager = new BudgetManager(_saveData, filePath);
 
 //Laddar transaktioner från JSON
-List<Transaction> transactions = _saveData.LoadTransaction() ?? new List<Transaction>();
+List<Transaction> transactions = _saveData.LoadTransaction(filePath) ?? new List<Transaction>();
 
 //Boolean som kontrollerar om programmet ska avslutas
  bool programRunning = true;
@@ -25,13 +29,12 @@ while (programRunning)
     Console.WriteLine("BudgetApp");
     Console.WriteLine("----------");
     Console.WriteLine("1. Lägg till inkomst");
-    Console.WriteLine("2. Lägg till utgift");
-    Console.WriteLine("3. Visa alla transaktioner");
-    Console.WriteLine("4. Beräkna saldo");
-    Console.WriteLine("5. Radera transaktion");
+    Console.WriteLine("2. Visa alla transaktioner");
+    Console.WriteLine("3. Beräkna saldo");
+    Console.WriteLine("4. Radera transaktion");
     Console.WriteLine("---------------");
-    Console.WriteLine("6. Testa budget");
-    Console.WriteLine("7. Avsluta programmet");
+    Console.WriteLine("5. Testa budget");
+    Console.WriteLine("6. Avsluta programmet");
     Console.WriteLine("---------------");
 
     //Variabel som lagrar input
@@ -73,20 +76,24 @@ while (programRunning)
                 string description = Console.ReadLine();
 
                 Console.WriteLine("Ange belopp för transaktion: ");
-                decimal amount = decimal.Parse(Console.ReadLine());
-                
+                string amountInput = Console.ReadLine();
+                decimal amount;
+
                 //Kontroll om korrekt belopp
-                 if (!decimal.TryParse(Console.ReadLine(), out amount))
+                 if (!decimal.TryParse(amountInput, out amount) || (amount <= 0))
                 {
                     Console.WriteLine("Ogiltigt belopp. Försök igen.");
-                    break;
+                    return;
+                 
                 }
 
                 Console.Write("Ange datum (yyyy-mm-dd): ");
-                DateTime date = DateTime.Parse(Console.ReadLine());
+                string  dateInput = Console.ReadLine();
+                DateTime date;
+;
                 
                 //Kontroll för datumformat
-                if (!DateTime.TryParse(Console.ReadLine(), out date))
+                if (!DateTime.TryParse(dateInput, out date))
                 {
                     Console.WriteLine("Ogiltigt datumformat. Försök igen.");
                     break;
@@ -101,10 +108,10 @@ while (programRunning)
           
           
 
-                case 3:
+
+                //Visa transaktioner
+                case 2:
                Console.Clear();
-
-
 
                     budgetManager.displayTransactions();
                   
@@ -115,7 +122,7 @@ while (programRunning)
 
 
                 //Beräkna totalt saldo
-                case 4:
+                case 3:
                Console.Clear();
 
                 //Anropar CalculateBalance med transaktionslistan
@@ -131,7 +138,7 @@ while (programRunning)
 
 
                 //Radera transaktion
-                case 5:
+                case 4:
                 Console.Clear();
 
                 //Skriver ut transaktioner
@@ -167,8 +174,32 @@ while (programRunning)
 
 
 
+                case 5:
+                                
+                    Console.Clear();
+                    
+                    Console.WriteLine("Din budgets kapacitet kommer nu testas genom slumpmässig, procentuell ökning: ");
+                    
+                    Console.ReadKey();
+                   
+                     Console.Clear();
+                    
+                    budgetManager.TestBudget();
+
+                    Console.WriteLine(Environment.NewLine);
+                    
+                    Console.WriteLine("Tryck på valfri tangent...");
+
+                    Console.ReadKey();
+
+                    continue;
+
+              
+    
+
+
           
-              case 7:
+              case 6:
                programRunning = false;
                     Console.WriteLine("Programmet avslutas.");
                     Console.WriteLine("Tryck på valfri tangent...");

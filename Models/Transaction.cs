@@ -22,7 +22,12 @@ namespace Mom5_Projekt.Models
             return $"[{Type}], Kategori: {Category}, Beskrivning: {Description}, Belopp: {Amount}, Datum: {Date.ToShortDateString()}";
         }
     
-    
+        //Metod som uppdaterar summan för transaktionen
+          public void UpdateTransaction(decimal newAmount)
+    {
+       SetAmount(newAmount);
+    }
+
     
     
     }

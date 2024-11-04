@@ -63,7 +63,7 @@ namespace Mom5_Projekt.Models
 
 
         //Metod för att ladda sparad transaktion
-        public List <Transaction> LoadTransaction()
+        public List <Transaction> LoadTransaction(string filePath)
         {
              try
             {

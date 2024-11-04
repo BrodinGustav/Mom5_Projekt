@@ -12,7 +12,7 @@ namespace Mom5_Projekt.Models
         //Deklarerar privat variabel SaveData för åtkomst till spara/ladda data-metoder
        private SaveData _saveData;
 
-
+            
 
         //Initierar Lista
        private List<Transaction> _transactionList = new List<Transaction>();
@@ -21,13 +21,13 @@ namespace Mom5_Projekt.Models
 
 
     //Tar emot SaveData som argument i konstruktorn
-    public BudgetManager(SaveData saveData)
+    public BudgetManager(SaveData saveData, string filePath)
     {
         //Initierar
         _saveData = saveData;
 
         //Laddar transaktioner från JSON-filen vid start
-        _transactionList = _saveData.LoadTransaction() ?? new List<Transaction>();
+        _transactionList = _saveData.LoadTransaction(filePath) ?? new List<Transaction>();
     
 
     
@@ -145,7 +145,7 @@ namespace Mom5_Projekt.Models
             }
     
     
-                    //Metd som räknar ut totalt saldo
+                    //Metod som räknar ut totalt saldo
                     public decimal CalculateBalance (List<Transaction> transactions)
                     {
                         //Deklarerar variabler som håller totala värden för inkomst/utgift
@@ -166,11 +166,37 @@ namespace Mom5_Projekt.Models
                             else if(transaction.Type == TransactionType.Expense)
                             {
                                 //Transaktionens summa subtraheras från den totala inkomsten
-                                totalIncome -= transaction.Amount;
+                                totalExpense += transaction.Amount;
                             }
                         }
                         return totalIncome - totalExpense;
                     }
+
+
+
+                     //Metod som randomiserar procentuell slumpmässig ökning för utgifter
+                public void TestBudget()
+                {
+                    try{
+                         //Anropar randomiseraren. Skickar med BudgetManager-instansen.
+                        Randomiserare.GenerateRandomExpense(this);
+                    }
+                     catch (Exception ex)
+            {
+                Console.WriteLine("Ett fel inträffade vid test av budget: " + ex.Message);
+
+            }
+            
+                }
+
+
+                //Metod för att hämta transaktioner. 
+    public List<Transaction> GetTransactions()
+    {
+        //Returnerar den laddade listan av transaktioner
+        return _transactionList; 
+    }
+
     
     }
 
