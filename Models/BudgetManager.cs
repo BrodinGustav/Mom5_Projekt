@@ -37,7 +37,7 @@ namespace Mom5_Projekt.Models
     
 
             //Metod för att registrera transaktion
-            public void addTransaction(string category, string description, decimal amount, DateTime date)
+            public void addTransaction(TransactionType type, string category, string description, decimal amount, DateTime date)
            {   
 
             try
@@ -61,8 +61,8 @@ namespace Mom5_Projekt.Models
 
             else
             {
-                //Skapar ny transaktion
-                Transaction newTransaction = new Transaction(category, description, amount, date);
+                //Skapar ny transaktion med konstruktor
+                Transaction newTransaction = new Transaction(type, category, description, amount, date);
 
                 //Lägger till transaktionen till listan i SaveData
                 _transactionList.Add(newTransaction); // Använd Transaction direkt här
@@ -143,6 +143,35 @@ namespace Mom5_Projekt.Models
                     return;
                 }
             }
+    
+    
+                    //Metd som räknar ut totalt saldo
+                    public decimal CalculateBalance (List<Transaction> transactions)
+                    {
+                        //Deklarerar variabler som håller totala värden för inkomst/utgift
+                        decimal totalIncome = 0;
+                        decimal totalExpense = 0;
+
+                        //Loopar igenom transaktionerna i listan
+                        foreach (var transaction in transactions)
+                        {
+                            //Kontroll med Enum om transaktion är inkomst
+                            if (transaction.Type == TransactionType.Income)
+                            {
+                                //Transaktionens summa adderas till den totala inkomsten
+                                totalIncome += transaction.Amount;
+                            }
+
+                            //Kontoll med Enum om transaktion är utgift.
+                            else if(transaction.Type == TransactionType.Expense)
+                            {
+                                //Transaktionens summa subtraheras från den totala inkomsten
+                                totalIncome -= transaction.Amount;
+                            }
+                        }
+                        return totalIncome - totalExpense;
+                    }
+    
     }
 
     }

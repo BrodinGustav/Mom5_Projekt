@@ -8,17 +8,18 @@ namespace Mom5_Projekt.Models
         //Klassen ärver från basklassen Transaction
     public class Transaction : TransactionBluePrint
     {
+        public TransactionType Type { get; set; }   
 
         //Konstruktor
-        public Transaction(string category, string description, decimal amount, DateTime date) :base(category, description, amount, date)
+        public Transaction(TransactionType type, string category, string description, decimal amount, DateTime date) :base(category, description, amount, date)
         {
-            
+            Type = type;
         }
 
         //Metoder att ärva från TransactionBluePrint
       public override string DisplayInfo()
         {
-            return $"[Inkomst], Kategori: {Category}, Beskrivning: {Description}, Belopp: {Amount}, Datum: {Date.ToShortDateString()}";
+            return $"[{Type}], Kategori: {Category}, Beskrivning: {Description}, Belopp: {Amount}, Datum: {Date.ToShortDateString()}";
         }
     
     
