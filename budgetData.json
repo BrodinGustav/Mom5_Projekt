@@ -1,14 +1,8 @@
 [
   {
-    "Category": "l\u0000n",
+    "Category": "L\u0000n",
     "Description": "l\u0000n",
     "Amount": 300,
-    "Date": "2024-02-01T00:00:00"
-  },
-  {
-    "Category": "s\u0000lt",
-    "Description": "s\u0000lt",
-    "Amount": 500,
     "Date": "2024-02-01T00:00:00"
   }
 ]

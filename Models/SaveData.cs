@@ -43,7 +43,7 @@ namespace Mom5_Projekt.Models
             //Skriver över Json-sträng till fil
             File.WriteAllText(filePath, json);
 
-            Console.WriteLine("Transaktionen är sparad!");
+            Console.WriteLine("Transaktionen är uppdaterad!");
         }        
         
         catch (IOException ex) //Hantera eventuella IO-fel, t.ex. om filen inte kan skrivas

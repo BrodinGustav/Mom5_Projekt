@@ -127,8 +127,9 @@ namespace Mom5_Projekt.Models
                     _transactionList.RemoveAt(index);
 
                     //Sparar uppdaterad lista
-                    _saveData.SaveTransaction(_transactionList);
                     Console.WriteLine("Transaktion har raderats.");
+                    _saveData.SaveTransaction(_transactionList);
+                  
                 }
                 else
                 {

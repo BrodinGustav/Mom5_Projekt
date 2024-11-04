@@ -74,6 +74,8 @@ while (programRunning)
                     break; 
 
 
+
+
                 //Radera transaktion
                 case 5:
                 Console.Clear();
@@ -81,24 +83,36 @@ while (programRunning)
                 //Skriver ut transaktioner
                budgetManager.displayTransactions();
 
+            Console.WriteLine(Environment.NewLine);
+
                Console.WriteLine("Ange index för transaktion som önskas raderas: ");
 
-                  Console.WriteLine("Tryck på valfri tangent...");
-                    Console.ReadKey();
+                //Lagrar input
+                string deleteInput = Console.ReadLine();
+            
 
+                Console.WriteLine("Tryck på valfri tangent...");
+                Console.ReadKey();
+                
+                    
                //Kontroll om input kan konverteras till heltal
-               if (int.TryParse(Console.ReadLine(), out int deleteIndex))
+               if (int.TryParse(deleteInput, out int deleteIndex))
                {
-                    budgetManager.deleteTransaction(deleteIndex -1);
+                    //Debugging output
+                     Console.WriteLine($"Du angav index: {deleteIndex}"); 
+                   
+                   //Justerar till 0 index för listan
+                    budgetManager.deleteTransaction(deleteIndex -1);    
                }
                else
                {
-                Console.WriteLine("Ogiltigt index. Försök igen.");
-                   Console.WriteLine("Tryck på valfri tangent...");
-                    Console.ReadKey();
-                continue;
+                Console.WriteLine("Ogiltigt index. Försök igen.");              
                }
+                
+                Console.WriteLine("Tryck på valfri tangent...");
+                Console.ReadKey();
                 break;
+
 
 
 

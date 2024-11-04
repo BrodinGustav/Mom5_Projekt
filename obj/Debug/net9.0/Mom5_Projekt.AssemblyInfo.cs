@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Mom5_Projekt")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bd5d7a5e81717db1a47ed8767a6655164376fb32")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+31221120992d1cfedd3b7af8c04e40de61b8e678")]
 [assembly: System.Reflection.AssemblyProductAttribute("Mom5_Projekt")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Mom5_Projekt")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
