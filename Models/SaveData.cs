@@ -31,9 +31,9 @@ namespace Mom5_Projekt.Models
             {
 
                 //Kontroll om listan är null
-                if (_transactionsList == null)
+                if (_transactionsList == null || !_transactionsList.Any())
                 {
-                    Console.WriteLine("Transaktionslistan är null, inget att spara.");
+                    Console.WriteLine("Transaktionslistan är tom, inget att spara.");
                     return;
                 }
          
@@ -100,12 +100,13 @@ namespace Mom5_Projekt.Models
             {
                 Console.WriteLine("Ett oväntat fel inträffade: " + ex.Message);
             }
-            
-            Console.WriteLine("Inga transaktioner hittades.");
+
+               Console.WriteLine("Inga transaktioner hittades.");
 
               //Returnerar tom lista
               return new List<Transaction>();
         }
+    
     }
 
 }

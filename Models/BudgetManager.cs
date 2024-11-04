@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Mom5_Projekt.Models
@@ -27,6 +28,9 @@ namespace Mom5_Projekt.Models
 
         //Laddar transaktioner från JSON-filen vid start
         _transactionList = _saveData.LoadTransaction() ?? new List<Transaction>();
+    
+
+    
     }
        
 
@@ -61,13 +65,13 @@ namespace Mom5_Projekt.Models
                 Transaction newTransaction = new Transaction(category, description, amount, date);
 
                 //Lägger till transaktionen till listan i SaveData
-                _saveData._transactionList.Add(newTransaction); // Använd Transaction direkt här
+                _transactionList.Add(newTransaction); // Använd Transaction direkt här
 
 
                 // Anropar metod från SaveData för att spara transaktion. Skickar med listan
-                if (_saveData._transactionList.Count > 0)
+                if (_transactionList.Count > 0)
                 {
-                    _saveData.SaveTransaction(_saveData._transactionList);
+                    _saveData.SaveTransaction(_transactionList);
              
               
                 //Anropar metod för utskrift
@@ -92,13 +96,16 @@ namespace Mom5_Projekt.Models
             //Metod för att skriva ut transaktioner
             public void displayTransactions()
             {
-    
+           
+                //Kontroll om JSON innehåller data
                if (_transactionList.Count > 0)
                 {
-                    
+                    //Loopar igenom data och skriver ut varje transaktion 
                     for(int i = 0; i < _transactionList.Count; i++)
                     {
                         var transaction = _transactionList[i];
+
+                        //Tilldelar ID till varje transaktion, samt anropar DisplayInfo från basklassen gällande utskrift
                         Console.WriteLine($"ID: [{i+1}] - {transaction.DisplayInfo()}");
                     }
                     
@@ -110,7 +117,6 @@ namespace Mom5_Projekt.Models
             //Metod för att radera transaktion
             public void deleteTransaction (int index)
             {
-                
 
                 //Kontroll om JSON-fil innehåller data
                 if (_transactionList == null  || _transactionList.Count == 0)
@@ -118,8 +124,8 @@ namespace Mom5_Projekt.Models
                     Console.WriteLine("Finns inga transaktioner att radera");
                     return;
                 }
-                
-                
+
+
                 //Kontroll om medskickat index är inom ramen för listan
                 if (index >= 0 && index < _transactionList.Count)
                 {
@@ -129,11 +135,12 @@ namespace Mom5_Projekt.Models
                     //Sparar uppdaterad lista
                     Console.WriteLine("Transaktion har raderats.");
                     _saveData.SaveTransaction(_transactionList);
-                  
+            
                 }
                 else
                 {
                     Console.WriteLine("Ogiltigt index. Var god försök igen.");
+                    return;
                 }
             }
     }

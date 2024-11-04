@@ -16,8 +16,8 @@ BudgetManager budgetManager = new BudgetManager(_saveData);
 
 while (programRunning)
 {
-    //Console.Clear();
-            //Skriver om skärm efter varje menyval
+    Console.Clear();
+            
     Console.WriteLine("BudgetApp");
     Console.WriteLine("----------");
     Console.WriteLine("1. Lägg till inkomst");
@@ -65,7 +65,9 @@ while (programRunning)
           
 
                 case 3:
-                Console.Clear();
+               Console.Clear();
+
+
 
                     budgetManager.displayTransactions();
                   
@@ -89,10 +91,6 @@ while (programRunning)
 
                 //Lagrar input
                 string deleteInput = Console.ReadLine();
-            
-
-                Console.WriteLine("Tryck på valfri tangent...");
-                Console.ReadKey();
                 
                     
                //Kontroll om input kan konverteras till heltal
