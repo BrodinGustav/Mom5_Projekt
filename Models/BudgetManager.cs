@@ -24,31 +24,11 @@ namespace Mom5_Projekt.Models
     {
         //Initierar
         _saveData = saveData;
-         _transactionList = new List<Transaction>();
+
+        //Laddar transaktioner från JSON-filen vid start
+        _transactionList = _saveData.LoadTransaction() ?? new List<Transaction>();
     }
-    
-
-
-
-       //Anropar metod från klassen SaveData för att läsa in sparade transaktioner
-        public void LoadTransaction()
-        {
-            _transactionList =_saveData.LoadTransaction();
-
-
-            if (_transactionList != null && _transactionList.Count > 0)
-            {
-                Console.WriteLine("Transaktioner har laddats");
-            }
-
-
-            else
-            {
-                Console.WriteLine("Inga transaktioner hittades");
-            }
-
-        }
-    
+       
 
     
 
@@ -80,19 +60,19 @@ namespace Mom5_Projekt.Models
                 //Skapar ny transaktion
                 Transaction newTransaction = new Transaction(category, description, amount, date);
 
-      // Lägger till transaktionen till listan i SaveData
-        _saveData._transactionList.Add(newTransaction); // Använd Transaction direkt här
+                //Lägger till transaktionen till listan i SaveData
+                _saveData._transactionList.Add(newTransaction); // Använd Transaction direkt här
 
 
                 // Anropar metod från SaveData för att spara transaktion. Skickar med listan
-        if (_saveData._transactionList.Count > 0)
-        {
-            _saveData.SaveTransaction(_saveData._transactionList);
+                if (_saveData._transactionList.Count > 0)
+                {
+                    _saveData.SaveTransaction(_saveData._transactionList);
              
               
                 //Anropar metod för utskrift
                 newTransaction.DisplayInfo();
-            }
+                }
         
             else
             {
@@ -112,14 +92,13 @@ namespace Mom5_Projekt.Models
             //Metod för att skriva ut transaktioner
             public void displayTransactions()
             {
-                var transactionList = _saveData.LoadTransaction();
-
-               if (transactionList.Count > 0)
+    
+               if (_transactionList.Count > 0)
                 {
                     
-                    for(int i = 0; i < transactionList.Count; i++)
+                    for(int i = 0; i < _transactionList.Count; i++)
                     {
-                        var transaction = transactionList[i];
+                        var transaction = _transactionList[i];
                         Console.WriteLine($"ID: [{i+1}] - {transaction.DisplayInfo()}");
                     }
                     
@@ -131,20 +110,21 @@ namespace Mom5_Projekt.Models
             //Metod för att radera transaktion
             public void deleteTransaction (int index)
             {
-                  var transactionList = _saveData.LoadTransaction();
                 
-                if (transactionList == null  || transactionList.Count == 0)
+
+                //Kontroll om JSON-fil innehåller data
+                if (_transactionList == null  || _transactionList.Count == 0)
                 {
                     Console.WriteLine("Finns inga transaktioner att radera");
                     return;
                 }
                 
                 
-                //Kontroll om index är inom ramen för listan
-                if (index >= 0 && index < transactionList.Count)
+                //Kontroll om medskickat index är inom ramen för listan
+                if (index >= 0 && index < _transactionList.Count)
                 {
                     //Radera transaktion
-                    transactionList.RemoveAt(index);
+                    _transactionList.RemoveAt(index);
 
                     //Sparar uppdaterad lista
                     _saveData.SaveTransaction(_transactionList);
@@ -152,7 +132,7 @@ namespace Mom5_Projekt.Models
                 }
                 else
                 {
-                    Console.WriteLine("Det finns inga transaktioner att radera.");
+                    Console.WriteLine("Ogiltigt index. Var god försök igen.");
                 }
             }
     }

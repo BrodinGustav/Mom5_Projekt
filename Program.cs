@@ -6,10 +6,10 @@ using System.Runtime.InteropServices;
 using Mom5_Projekt.Models;
 
 //Instansierar SaveData
-SaveData saveData = new SaveData();
+SaveData _saveData = new SaveData();
 
 //Instansierar BudgetManager med saveData som argument för tillgång till metoder
-BudgetManager budgetManager = new BudgetManager(saveData);
+BudgetManager budgetManager = new BudgetManager(_saveData);
 
 //Boolean som kontrollerar om programmet ska avslutas
  bool programRunning = true;
@@ -74,7 +74,7 @@ while (programRunning)
                     break; 
 
 
-
+                //Radera transaktion
                 case 5:
                 Console.Clear();
 
@@ -89,7 +89,7 @@ while (programRunning)
                //Kontroll om input kan konverteras till heltal
                if (int.TryParse(Console.ReadLine(), out int deleteIndex))
                {
-                    budgetManager.deleteTransaction(deleteIndex);
+                    budgetManager.deleteTransaction(deleteIndex -1);
                }
                else
                {
