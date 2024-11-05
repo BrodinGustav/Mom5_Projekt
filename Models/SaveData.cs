@@ -15,13 +15,16 @@ namespace Mom5_Projekt.Models
         public List<Transaction> _transactionList { get; set; }
 
         //Filväg där transaktioner sparas
-        private readonly string filePath = "budgetData.json";
+        private readonly string filePath; 
 
         //Konstruktor
         public SaveData()
         {
             //Säkerställer att listan är initialiserad
             _transactionList = new List<Transaction>();
+
+            //Ger värde till readonly variabeln
+            filePath = "budgetData.json";
         }
 
         //Metod för att spara transaktion
@@ -48,15 +51,15 @@ namespace Mom5_Projekt.Models
 
             catch (IOException ex) //Hantera eventuella IO-fel, t.ex. om filen inte kan skrivas
             {
-                Console.WriteLine("Ett fel inträffade vid skrivning till filen: " + ex.Message);
+                Console.WriteLine($"Ett fel inträffade vid skrivning till filen: {ex.Message}");
             }
             catch (JsonException ex) //Hantera eventuella fel under serialisering
             {
-                Console.WriteLine("Ett fel inträffade vid serialisering av budgetdata: " + ex.Message);
+                Console.WriteLine($"Ett fel inträffade vid serialisering av budgetdata: {ex.Message}");
             }
             catch (Exception ex) //Hantera eventuella oväntade fel
             {
-                Console.WriteLine("Ett oväntat fel inträffade: " + ex.Message);
+                Console.WriteLine($"Ett oväntat fel inträffade: {ex.Message}");
             }
         }
 
@@ -91,15 +94,15 @@ namespace Mom5_Projekt.Models
 
             catch (IOException ex) //Hantera eventuella IO-fel, t.ex. om filen inte kan skrivas
             {
-                Console.WriteLine("Ett fel inträffade vid deserialisering av transaktioner: " + ex.Message);
+                Console.WriteLine($"Ett fel inträffade vid deserialisering av transaktioner: {ex.Message}");
             }
             catch (JsonException ex) //Hantera eventuella fel under serialisering
             {
-                Console.WriteLine("Ett fel inträffade vid serialisering av budgetdata: " + ex.Message);
+                Console.WriteLine($"Ett fel inträffade vid serialisering av budgetdata: {ex.Message}");
             }
             catch (Exception ex) //Hantera eventuella oväntade fel
             {
-                Console.WriteLine("Ett oväntat fel inträffade: " + ex.Message);
+                Console.WriteLine($"Ett oväntat fel inträffade: {ex.Message}");
             }
 
             Console.WriteLine("Inga transaktioner hittades.");

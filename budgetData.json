@@ -1,9 +1,9 @@
 [
   {
-    "Type": 1,
-    "Category": "Hyra",
-    "Description": "hyra",
-    "Amount": 1000,
-    "Date": "2024-01-02T00:00:00"
+    "Type": 0,
+    "Category": "l\u0000n",
+    "Description": "l\u0000n",
+    "Amount": 3000,
+    "Date": "2024-01-05T00:00:00"
   }
 ]

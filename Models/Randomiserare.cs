@@ -16,6 +16,8 @@ namespace Mom5_Projekt.Models
         //Metod för slumpmässiga utgifter
         public static void GenerateRandomExpense(BudgetManager budgetManager)
         {
+            try
+            {
 
             //Ladda befintliga transaktioner genom anrop av metod
             var transactions = budgetManager.GetTransactions();
@@ -88,6 +90,12 @@ namespace Mom5_Projekt.Models
 
             //Skriv ut total summa efter ökning
             Console.WriteLine($"Totalt saldo efter slumpmässig kostnadsökning: {totalBalance:C}");
+            
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ett fel inträffade vid skapande av slumpmässiga utgifter: {ex.Message}");
+            }
         }
     }
 }

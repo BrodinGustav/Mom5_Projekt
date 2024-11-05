@@ -7,17 +7,23 @@ using Mom5_Projekt.Models;
 //Instansierar SaveData
 SaveData _saveData = new SaveData();
 
-
 //Definiera filvägen för JSON-filen
-string filePath = "budgetData.Json";
+string filePath = "budgetData.json";
+
 
 
 //Instansierar BudgetManager med saveData som argument för tillgång till metoder
 BudgetManager budgetManager = new BudgetManager(_saveData, filePath);
 
-
 //Laddar transaktioner från JSON
 List<Transaction> transactions = _saveData.LoadTransaction(filePath) ?? new List<Transaction>();
+
+//Debugg
+Console.WriteLine("Laddade transaktioner:");
+foreach (var transaction in transactions)
+{
+    Console.WriteLine(transaction.DisplayInfo());
+}
 
 
 //Boolean som kontrollerar om programmet ska avslutas
@@ -26,7 +32,7 @@ bool programRunning = true;
 
 while (programRunning)
 {
-    Console.Clear();
+    //Console.Clear();
 
     Console.WriteLine("BudgetApp");
     Console.WriteLine("----------");
@@ -59,11 +65,14 @@ while (programRunning)
                     string typeInput = Console.ReadLine().Trim();
 
                     //Kontrollerar inmatning 
-                    if(!string.Equals(typeInput, "Inkomst", StringComparison.OrdinalIgnoreCase) &&
+                    if (!string.Equals(typeInput, "Inkomst", StringComparison.OrdinalIgnoreCase) &&
                     !string.Equals(typeInput, "Utgift", StringComparison.OrdinalIgnoreCase))
 
                     {
                         Console.WriteLine("Ogiltig typ. Ange 'Inkomst' eller 'Utgift'");
+
+                        Console.WriteLine("Tryck på valfri tangent...");
+                        Console.ReadKey();
                         continue;
                     }
 
@@ -72,21 +81,27 @@ while (programRunning)
                     ? TransactionType.Income
                     : TransactionType.Expense;
 
-    Console.WriteLine("Ange kategori för transaktion: ");
+                    Console.WriteLine("Ange kategori för transaktion: ");
                     string category = Console.ReadLine();
-                
-                if (string.IsNullOrWhiteSpace(category))
-                {
-                    Console.WriteLine("Var god ange kategori.");
-                    continue;
-                }
+
+                    if (string.IsNullOrWhiteSpace(category))
+                    {
+                        Console.WriteLine("Var god ange kategori.");
+                        Console.WriteLine("Tryck på valfri tangent...");
+                        Console.ReadKey();
+                        continue;
+                    }
 
                     Console.WriteLine("Ange beskrivning för transaktion: ");
                     string description = Console.ReadLine().Trim();
 
-                    if(string.IsNullOrWhiteSpace("description"))
+                    if (string.IsNullOrWhiteSpace(description))
                     {
                         Console.WriteLine("Var god ange beskrivning.");
+                        
+                        Console.WriteLine("Tryck på valfri tangent...");
+                        Console.ReadKey();
+                        continue;
                     }
 
 
@@ -99,6 +114,9 @@ while (programRunning)
                     if (!decimal.TryParse(amountInput, out amount) || (amount <= 0))
                     {
                         Console.WriteLine("Ogiltigt belopp. Ange positivt tal.");
+                        
+                        Console.WriteLine("Tryck på valfri tangent...");
+                        Console.ReadKey();
                         continue;
                     }
 
@@ -113,6 +131,9 @@ while (programRunning)
                     if (!DateTime.TryParse(dateInput, out date))
                     {
                         Console.WriteLine("Ogiltigt datumformat. Försök igen.");
+
+                        Console.WriteLine("Tryck på valfri tangent...");
+                        Console.ReadKey();
                         continue;
                     }
 
@@ -128,7 +149,7 @@ while (programRunning)
 
                 //Visa transaktioner
                 case 2:
-                    Console.Clear();
+                   // Console.Clear();
 
                     budgetManager.displayTransactions();
 
@@ -160,7 +181,7 @@ while (programRunning)
 
                 //Radera transaktion
                 case 4:
-                    Console.Clear();
+                    //Console.Clear();
 
                     //Skriver ut transaktioner
                     budgetManager.displayTransactions();
@@ -174,16 +195,19 @@ while (programRunning)
 
 
                     //Kontroll om användaren anger giltigt index
-                    if (!int.TryParse(deleteInput, out int deleteIndex) || deleteIndex > transactions.Count)
+                    if (!int.TryParse(deleteInput, out int deleteIndex))
                     {
                         Console.WriteLine("Ogitligt index. Försök igen.");
+                        
+                        Console.WriteLine("Tryck på valfri tangent...");
+                        Console.ReadKey();
                         continue;
 
                     }
 
                     //Justerar till 0 index för listan
-                    budgetManager.deleteTransaction(deleteIndex - 1);
-                    
+                    budgetManager.deleteTransaction(deleteIndex -1);
+
                     Console.WriteLine("Tryck på valfri tangent...");
                     Console.ReadKey();
                     break;
@@ -215,8 +239,6 @@ while (programRunning)
 
 
 
-
-
                 case 6:
                     programRunning = false;
                     Console.WriteLine("Programmet avslutas.");
@@ -224,8 +246,6 @@ while (programRunning)
                     Console.ReadKey();
                     Console.Clear();
                     break;
-
-
             }
 
         }

@@ -20,20 +20,24 @@ namespace Mom5_Projekt.Models
 
         //Konstruktor
         public BudgetManager(SaveData saveData, string filePath)
-    {
-            //Initierar
-            _saveData = saveData;
+        {
+            //Initierar SaveData. Kastar exception ifall null
+            _saveData = saveData ?? throw new ArgumentNullException(nameof(saveData), "SaveData kan inte vara null");
 
-        try
-        {
-            //Laddar transaktioner från JSON-filen vid start
-            _transactionList = _saveData.LoadTransaction(filePath) ?? new List<Transaction>();
+            try
+            {
+                //Laddar transaktioner från JSON-filen vid start
+                _transactionList = _saveData.LoadTransaction(filePath) ?? new List<Transaction>();
+            }
+
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ett fel inträffade vid laddning av transaktioner: {ex.Message}");
+
+                //Skapar tom lista om fel vid laddning
+                _transactionList = new List<Transaction>();
+            }
         }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Ett fel inträffade vid laddning av transaktioner: {ex.Message}");
-        }
-    }
 
 
 
@@ -73,20 +77,23 @@ namespace Mom5_Projekt.Models
                     //Lägger till transaktionen till listan 
                     _transactionList.Add(newTransaction);
 
-                try
-                {
+                    try
+                    {
                         //Anropar metod för att spara transaktion. Skickar med listan
                         _saveData.SaveTransaction(_transactionList);
+
+                        //Laddar om listan från JSON
+                        _saveData.LoadTransaction("budgetData.json");
 
 
                         //Anropar metod för utskrift
                         newTransaction.DisplayInfo();
                     }
-                
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Ett fel inträffade vid sparande av transaktionen: {ex.Message}");
-                }
+
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Ett fel inträffade vid sparande av transaktionen: {ex.Message}");
+                    }
                 }
             }
             catch (Exception ex)
@@ -110,16 +117,16 @@ namespace Mom5_Projekt.Models
                     Console.WriteLine("Det finns inga transaktioner att visa");
                     return;
                 }
-            
-                    //Loopar igenom data och skriver ut varje transaktion 
-                    for (int i = 0; i < _transactionList.Count; i++)
-                    {
-                        //Lagrar varje index i variabel
-                        var transaction = _transactionList[i];
 
-                        //Tilldelar ID till varje transaktion, samt anropar DisplayInfo från basklassen gällande utskrift
-                        Console.WriteLine($"ID: [{i + 1}] - {transaction.DisplayInfo()}");
-                    }
+                //Loopar igenom data och skriver ut varje transaktion 
+                for (int i = 0; i < _transactionList.Count; i++)
+                {
+                    //Lagrar varje index i variabel
+                    var transaction = _transactionList[i];
+
+                    //Tilldelar ID till varje transaktion, samt anropar DisplayInfo från basklassen gällande utskrift
+                    Console.WriteLine($"ID: [{i + 1}] - {transaction.DisplayInfo()}");
+                }
             }
             catch (Exception ex)
             {
@@ -135,7 +142,7 @@ namespace Mom5_Projekt.Models
         {
             try
             {
-
+                
                 //Kontroll om JSON-fil innehåller data
                 if (_transactionList == null || _transactionList.Count == 0)
                 {
@@ -145,21 +152,24 @@ namespace Mom5_Projekt.Models
 
 
                 //Kontroll om medskickat index är inom ramen för listan
-                if (index < 0 && index >= _transactionList.Count)
+                if (index < 0 || index > _transactionList.Count)
                 {
                     Console.WriteLine("Ogiltigt index. Var god försök igen.");
                     return;
                 }
-                
-                    //Radera transaktion
-                    _transactionList.RemoveAt(index);
 
-                    Console.WriteLine("Transaktion har raderats.");
+                //Radera transaktion
+                _transactionList.RemoveAt(index);
+
+                Console.WriteLine("Transaktion har raderats.");
 
                 try
                 {
                     //Sparar uppdaterad lista
                     _saveData.SaveTransaction(_transactionList);
+
+                    //Laddar om listan från JSON
+                    _saveData.LoadTransaction("budgetData.json");
                 }
                 catch (Exception ex)
                 {
