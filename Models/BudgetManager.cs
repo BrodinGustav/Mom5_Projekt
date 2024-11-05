@@ -14,21 +14,26 @@ namespace Mom5_Projekt.Models
         private SaveData _saveData;
 
 
-
         //Initierar Lista av transaktioner
         private List<Transaction> _transactionList = new List<Transaction>();
 
 
-
+        //Konstruktor
         public BudgetManager(SaveData saveData, string filePath)
-        {
+    {
             //Initierar
             _saveData = saveData;
 
+        try
+        {
             //Laddar transaktioner från JSON-filen vid start
             _transactionList = _saveData.LoadTransaction(filePath) ?? new List<Transaction>();
-
         }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Ett fel inträffade vid laddning av transaktioner: {ex.Message}");
+        }
+    }
 
 
 
@@ -41,34 +46,35 @@ namespace Mom5_Projekt.Models
 
             {
                 //Kontroll om input är korrekt
-                if (string.IsNullOrWhiteSpace(category) || string.IsNullOrWhiteSpace(description))
+                if (string.IsNullOrWhiteSpace(category))
                 {
-
-                    Console.WriteLine("Var god ange kateogiry och beskrivning");
+                    Console.WriteLine("Var god ange kategori.");
                     return;
+                }
 
+                if (string.IsNullOrWhiteSpace(description))
+                {
+                    Console.WriteLine("Var god ange beskrivning.");
+                    return;
                 }
 
                 //Kontroll om input är under 0
                 if (amount <= 0)
                 {
-                    Console.WriteLine("Var god ange ett giltigt belopp (större än 0).");
+                    Console.WriteLine("Var god ange ett giltigt belopp större än 0.");
                     return;
                 }
 
-
                 else
                 {
-                    //Skapar ny transaktion med konstruktor
+                    //Skapar ny transaktion
                     Transaction newTransaction = new Transaction(type, category, description, amount, date);
 
                     //Lägger till transaktionen till listan 
                     _transactionList.Add(newTransaction);
 
-
-                    //Kontroll om transaktionen faktiskt lades till listan.
-                    if (_transactionList.Count > 0)
-                    {
+                try
+                {
                         //Anropar metod för att spara transaktion. Skickar med listan
                         _saveData.SaveTransaction(_transactionList);
 
@@ -76,16 +82,16 @@ namespace Mom5_Projekt.Models
                         //Anropar metod för utskrift
                         newTransaction.DisplayInfo();
                     }
-
-                    else
-                    {
-                        Console.WriteLine("Det finns inga transaktioner att spara.");
-                    }
+                
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Ett fel inträffade vid sparande av transaktionen: {ex.Message}");
+                }
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Ett fel inträffade: " + ex.Message);
+                Console.WriteLine("Ett fel inträffade vid tillägg av transaktionen: " + ex.Message);
             }
         }
 
@@ -99,8 +105,12 @@ namespace Mom5_Projekt.Models
             {
 
                 //Kontroll om JSON innehåller data
-                if (_transactionList.Count > 0)
+                if (_transactionList == null || !_transactionList.Any())
                 {
+                    Console.WriteLine("Det finns inga transaktioner att visa");
+                    return;
+                }
+            
                     //Loopar igenom data och skriver ut varje transaktion 
                     for (int i = 0; i < _transactionList.Count; i++)
                     {
@@ -110,11 +120,10 @@ namespace Mom5_Projekt.Models
                         //Tilldelar ID till varje transaktion, samt anropar DisplayInfo från basklassen gällande utskrift
                         Console.WriteLine($"ID: [{i + 1}] - {transaction.DisplayInfo()}");
                     }
-                }
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Ett fel inträffade: " + ex.Message);
+                Console.WriteLine("Ett fel inträffade vid visning av transaktioner: " + ex.Message);
             }
         }
 
@@ -136,26 +145,30 @@ namespace Mom5_Projekt.Models
 
 
                 //Kontroll om medskickat index är inom ramen för listan
-                if (index >= 0 && index < _transactionList.Count)
+                if (index < 0 && index >= _transactionList.Count)
                 {
+                    Console.WriteLine("Ogiltigt index. Var god försök igen.");
+                    return;
+                }
+                
                     //Radera transaktion
                     _transactionList.RemoveAt(index);
 
                     Console.WriteLine("Transaktion har raderats.");
 
+                try
+                {
                     //Sparar uppdaterad lista
                     _saveData.SaveTransaction(_transactionList);
-
                 }
-                else
+                catch (Exception ex)
                 {
-                    Console.WriteLine("Ogiltigt index. Var god försök igen.");
-                    return;
+                    Console.WriteLine($"Ett fel inträffade vid sparning efter raderad transaktion: {ex.Message}");
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Ett fel inträffade: " + ex.Message);
+                Console.WriteLine("Ett fel inträffade vid radering av transaktion: " + ex.Message);
             }
         }
 
@@ -198,9 +211,9 @@ namespace Mom5_Projekt.Models
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Ett fel inträffade: " + ex.Message);
+                Console.WriteLine("Ett fel inträffade vid beräkning av saldo: " + ex.Message);
+                return 0;
             }
-            return 0;
         }
 
 
@@ -215,7 +228,7 @@ namespace Mom5_Projekt.Models
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Ett fel inträffade vid test av budget: " + ex.Message);
+                Console.WriteLine($"Ett fel inträffade vid test av budget: {ex.Message}");
 
             }
 
@@ -232,7 +245,7 @@ namespace Mom5_Projekt.Models
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Ett fel inträffade: " + ex.Message);
+                Console.WriteLine($"Ett fel inträffade vid hämtning av transaktioner:  {ex.Message}");
             }
             return new List<Transaction>();
         }
