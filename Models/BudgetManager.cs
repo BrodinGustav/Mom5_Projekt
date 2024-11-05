@@ -170,6 +170,13 @@ namespace Mom5_Projekt.Models
 
                     //Laddar om listan från JSON
                     _saveData.LoadTransaction("budgetData.json");
+
+                    Console.WriteLine(Environment.NewLine);
+
+                    //Skriver ut transaktioner
+                    displayTransactions();
+
+  
                 }
                 catch (Exception ex)
                 {
