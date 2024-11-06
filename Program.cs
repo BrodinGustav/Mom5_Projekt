@@ -10,17 +10,15 @@ SaveData _saveData = new SaveData();
 //Definiera filvägen för JSON-filen
 string filePath = "budgetData.json";
 
-
-
 //Instansierar BudgetManager med saveData som argument för tillgång till metoder
 BudgetManager budgetManager = new BudgetManager(_saveData, filePath);
 
 //Laddar transaktioner från JSON
-List<Transaction> transactions = _saveData.LoadTransaction(filePath) ?? new List<Transaction>();
+List<Transaction> _transactions = _saveData.LoadTransaction(filePath) ?? new List<Transaction>();
 
 //Debugg
 Console.WriteLine("Laddade transaktioner:");
-foreach (var transaction in transactions)
+foreach (var transaction in _transactions)
 {
     Console.WriteLine(transaction.DisplayInfo());
 }
@@ -32,7 +30,7 @@ bool programRunning = true;
 
 while (programRunning)
 {
-    //Console.Clear();
+    Console.Clear();
 
     Console.WriteLine("BudgetApp");
     Console.WriteLine("----------");
@@ -149,7 +147,8 @@ while (programRunning)
 
                 //Visa transaktioner
                 case 2:
-                   // Console.Clear();
+                   
+                   Console.Clear();
 
                     budgetManager.displayTransactions();
 
@@ -181,7 +180,7 @@ while (programRunning)
 
                 //Radera transaktion
                 case 4:
-                    //Console.Clear();
+                    Console.Clear();
 
                     //Skriver ut transaktioner
                     budgetManager.displayTransactions();

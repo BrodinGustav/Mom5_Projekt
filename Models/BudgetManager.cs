@@ -26,7 +26,7 @@ namespace Mom5_Projekt.Models
 
             try
             {
-                //Laddar transaktioner från JSON-filen vid start
+                //Laddar transaktioner från JSON-filen vid start till listan
                 _transactionList = _saveData.LoadTransaction(filePath) ?? new List<Transaction>();
             }
 

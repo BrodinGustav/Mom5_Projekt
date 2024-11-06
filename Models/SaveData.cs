@@ -11,7 +11,7 @@ namespace Mom5_Projekt.Models
     public class SaveData
     {
 
-        //Deklarerar lista utifrån basklassen TransactionBluePrint som lagrar transaktioner
+        //Deklarerar lista som lagrar transaktioner
         public List<Transaction> _transactionList { get; set; }
 
         //Filväg där transaktioner sparas
@@ -68,12 +68,20 @@ namespace Mom5_Projekt.Models
         //Metod för att ladda sparad transaktion
         public List<Transaction> LoadTransaction(string filePath)
         {
+
             try
             {
 
                 //Kontroll om filen finns
-                if (File.Exists(filePath))
+                if (!File.Exists(filePath))
+                
                 {
+                         Console.WriteLine("Ingen fil hittades för att ladda transaktioner.");
+                        
+                        //Returnerar tom lista om filen inte finns
+                        return new List<Transaction>(); 
+                }
+
                     //Läser in filen som sträng
                     string jsonText = File.ReadAllText(filePath);
 
@@ -82,14 +90,7 @@ namespace Mom5_Projekt.Models
 
                     //Kontroll om deserialisering lyckades
                     return transactions ?? new List<Transaction>();
-                }
-
-                else
-                {
-                    Console.WriteLine("Ingen fil hittades för att ladda transaktioner.");
-
-                    return new List<Transaction>();
-                }
+            
             }
 
             catch (IOException ex) //Hantera eventuella IO-fel, t.ex. om filen inte kan skrivas
