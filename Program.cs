@@ -13,17 +13,6 @@ string filePath = "budgetData.json";
 //Instansierar BudgetManager med saveData som argument för tillgång till metoder
 BudgetManager budgetManager = new BudgetManager(_saveData, filePath);
 
-//Laddar transaktioner från JSON
-List<Transaction> _transactions = _saveData.LoadTransaction(filePath) ?? new List<Transaction>();
-
-//Debugg
-Console.WriteLine("Laddade transaktioner:");
-foreach (var transaction in _transactions)
-{
-    Console.WriteLine(transaction.DisplayInfo());
-}
-
-
 //Boolean som kontrollerar om programmet ska avslutas
 bool programRunning = true;
 
