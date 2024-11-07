@@ -23,7 +23,7 @@ while (programRunning)
 
     Console.WriteLine("BudgetApp");
     Console.WriteLine("----------");
-    Console.WriteLine("1. Lägg till inkomst");
+    Console.WriteLine("1. Lägg till transaktion");
     Console.WriteLine("2. Visa alla transaktioner");
     Console.WriteLine("3. Beräkna saldo");
     Console.WriteLine("4. Radera transaktion");
